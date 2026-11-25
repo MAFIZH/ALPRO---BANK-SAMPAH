@@ -71,13 +71,12 @@ void tampilLaporan(Transaksi data[], int n) {
 // Baca angka dengan validasi (supaya tidak error kalau user ketik huruf)
 double bacaAngka(const string &pesan) {
     double x;
-    string buang;
     while (true) {
         cout << pesan;
         if (cin >> x) return x;
         cout << "Input harus angka!" << endl;
         cin.clear();
-        cin >> buang;
+        cin.ignore(1000, '\n');
     }
 }
 
