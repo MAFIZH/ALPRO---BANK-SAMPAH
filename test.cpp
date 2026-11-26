@@ -1,7 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <limits>
 using namespace std;
 
 // ENUM: jenis sampah
@@ -41,7 +40,7 @@ double hitungUang(double kg, double hargaPerKg) {
 }
 
 void tampilHarga() {
-    cout << "\n=== DAFTAR HARGA PER KG ===\n";
+    cout << endl << "=== DAFTAR HARGA PER KG ===" << endl;
     for (int i = 1; i <= 4; i++) {
         cout << i << ". " << left << setw(8) << namaJenis((JenisSampah)i)
              << ": Rp " << fixed << setprecision(0) << HARGA[i] << endl;
@@ -50,11 +49,11 @@ void tampilHarga() {
 
 void tampilLaporan(Transaksi data[], int n) {
     double totalKg = 0, totalUang = 0;
-    cout << "\n=========== LAPORAN SETORAN ===========\n";
+    cout << endl << "=========== LAPORAN SETORAN ===========" << endl;
     cout << left << setw(4) << "No" << setw(15) << "Nasabah"
          << setw(10) << "Jenis" << setw(11) << "Berat(kg)"
          << "Total (Rp)" << endl;
-    cout << "---------------------------------------------\n";
+    cout << "---------------------------------------------" << endl;
     for (int i = 0; i < n; i++) {
         cout << left << setw(4) << i + 1
              << setw(15) << data[i].namaNasabah
@@ -64,8 +63,8 @@ void tampilLaporan(Transaksi data[], int n) {
         totalKg += data[i].beratKg;
         totalUang += data[i].total;
     }
-    cout << "---------------------------------------------\n";
-    cout << "Total sampah : " << fixed << setprecision(2) << totalKg << " kg\n";
+    cout << "---------------------------------------------" << endl;
+    cout << "Total sampah : " << fixed << setprecision(2) << totalKg << " kg" << endl;
     cout << "Total uang   : Rp " << setprecision(0) << totalUang << endl;
 }
 
@@ -75,9 +74,9 @@ double bacaAngka(const string &pesan) {
     while (true) {
         cout << pesan;
         if (cin >> x) return x;
-        cout << "Input harus angka!\n";
+        cout << "Input harus angka!" << endl;
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore(1000, '\n');
     }
 }
 
@@ -86,11 +85,11 @@ int main() {
     int jumlah = 0;
     char ulang;
 
-    cout << "=== PROGRAM BANK SAMPAH ===\n";
+    cout << "=== PROGRAM BANK SAMPAH ===" << endl;
 
     do {
         if (jumlah >= MAKS) {
-            cout << "Data penuh!\n";
+            cout << "Data penuh!" << endl;
             break;
         }
 
@@ -98,7 +97,7 @@ int main() {
         int pilih, satuan;
         Berat b;
 
-        cout << "\nNama nasabah : ";
+        cout << endl << "Nama nasabah : ";
         cin >> ws;
         getline(cin, t.namaNasabah);
 
@@ -107,39 +106,48 @@ int main() {
         do {
             pilih = (int)bacaAngka("Pilih jenis sampah (1-4): ");
             if (pilih < 1 || pilih > 4)
-                cout << "Pilihan tidak valid!\n";
+                cout << "Pilihan tidak valid!" << endl;
         } while (pilih < 1 || pilih > 4);
 
         t.jenis = (JenisSampah)pilih;
         t.harga = HARGA[pilih];
 
-        satuan = (int)bacaAngka("Input berat dalam (1. Kilogram, 2. Gram): ");
+        cout << endl << "====== Satuan Berat ======" << endl;
+        cout << "1. Kilogram" << endl;
+        cout << "2. Gram" << endl;
 
-        if (satuan == 2) {
-            b.gram = (int)bacaAngka("Berat (gram): ");
-            t.beratKg = b.gram / 1000.0;
-        } else {
+        do {
+            satuan = (int)bacaAngka("Pilih satuan berat (Input angka 1-2): ");
+            if (satuan < 1 || satuan > 2)
+                cout << "Input tidak valid! Masukkan angka 1 sampai 2." << endl;
+        } while (satuan < 1 || satuan > 2);
+
+        // Konversi sesuai satuan yang dipilih
+        if (satuan == 1) {
             b.kg = bacaAngka("Berat (kg): ");
             t.beratKg = b.kg;
+        } else {
+            b.gram = (int)bacaAngka("Berat (gram): ");
+            t.beratKg = b.gram / 1000.0;
         }
 
         if (t.beratKg <= 0) {
-            cout << "Berat harus lebih dari 0. Data tidak disimpan.\n";
+            cout << "Berat harus lebih dari 0. Data tidak disimpan." << endl;
         } else {
             t.total = hitungUang(t.beratKg, t.harga);
             data[jumlah++] = t;
 
-            cout << "\nSetoran berhasil dicatat!\n";
-            cout << "Berat : " << fixed << setprecision(2) << t.beratKg << " kg\n";
+            cout << endl << "Setoran berhasil dicatat!" << endl;
+            cout << "Berat : " << fixed << setprecision(2) << t.beratKg << " kg" << endl;
             cout << "Uang  : Rp " << setprecision(0) << t.total << endl;
         }
 
-        cout << "\nJalankan program lagi? (y/t): ";
+        cout << endl << "Jalankan program lagi? (y/t): ";
         cin >> ulang;
 
     } while (ulang == 'y' || ulang == 'Y');
 
     tampilLaporan(data, jumlah);
-    cout << "\nTerima kasih telah menabung sampah!\n";
+    cout << endl << "Terima kasih telah menabung sampah!" << endl;
     return 0;
 }
