@@ -43,7 +43,7 @@ void tampilHarga() {
     cout << endl << "=== DAFTAR HARGA PER KG ===" << endl;
     for (int i = 1; i <= 4; i++) {
         cout << i << ". " << left << setw(8) << namaJenis((JenisSampah)i)
-             << ": Rp " << fixed << setprecision(0) << HARGA[i] << endl;
+            << ": Rp " << fixed << setprecision(0) << HARGA[i] << endl;
     }
 }
 
@@ -51,15 +51,15 @@ void tampilLaporan(Transaksi data[], int n) {
     double totalKg = 0, totalUang = 0;
     cout << endl << "=========== LAPORAN SETORAN ===========" << endl;
     cout << left << setw(4) << "No" << setw(15) << "Nasabah"
-         << setw(10) << "Jenis" << setw(11) << "Berat(kg)"
-         << "Total (Rp)" << endl;
+        << setw(10) << "Jenis" << setw(11) << "Berat(kg)"
+        << "Total (Rp)" << endl;
     cout << "---------------------------------------------" << endl;
     for (int i = 0; i < n; i++) {
         cout << left << setw(4) << i + 1
-             << setw(15) << data[i].namaNasabah
-             << setw(10) << namaJenis(data[i].jenis)
-             << setw(11) << fixed << setprecision(2) << data[i].beratKg
-             << "Rp " << setprecision(0) << data[i].total << endl;
+            << setw(15) << data[i].namaNasabah
+            << setw(10) << namaJenis(data[i].jenis)
+            << setw(11) << fixed << setprecision(2) << data[i].beratKg
+            << "Rp " << setprecision(0) << data[i].total << endl;
         totalKg += data[i].beratKg;
         totalUang += data[i].total;
     }
@@ -68,13 +68,12 @@ void tampilLaporan(Transaksi data[], int n) {
     cout << "Total uang   : Rp " << setprecision(0) << totalUang << endl;
 }
 
-// Baca angka dengan validasi (supaya tidak error kalau user ketik huruf)
 double bacaAngka(const string &pesan) {
     double x;
     while (true) {
         cout << pesan;
         if (cin >> x) return x;
-        cout << "Input harus angka!" << endl;
+        cout << "Input harus berupa angka!" << endl;
         cin.clear();
         cin.ignore(1000, '\n');
     }
@@ -83,7 +82,7 @@ double bacaAngka(const string &pesan) {
 int main() {
     Transaksi data[MAKS];
     int jumlah = 0;
-    char ulang;
+    char ulangi;
 
     cout << "=== PROGRAM BANK SAMPAH ===" << endl;
 
@@ -133,10 +132,10 @@ int main() {
             cout << "Uang  : Rp " << setprecision(0) << t.total << endl;
         }
 
-        cout << endl << "Jalankan program lagi? (y/t): ";
+        cout << endl << "Jalankan program lagi? (ya/tidak): ";
         cin >> ulang;
 
-    } while (ulang == 'y' || ulang == 'Y');
+    } while (ulangi == 'ya' || ulangi == 'Ya');
 
     tampilLaporan(data, jumlah);
     cout << endl << "Terima kasih telah menabung sampah!" << endl;
