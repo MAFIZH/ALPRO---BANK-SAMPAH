@@ -1,0 +1,1 @@
+Membuat program administrasi bank sampah berbasis C++ yang dapat digunakan untuk mengelola data nasabah, mencatat transaksi setoran sampah, menghitung saldo secara otomatis, serta menampilkan laporan transaksi melalui menu pada program.
