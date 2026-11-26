@@ -3,16 +3,14 @@
 #include <string>
 using namespace std;
 
-// ENUM: jenis sampah
 enum JenisSampah { PLASTIK = 1, KERTAS, LOGAM, KACA };
 
-// UNION: satu setoran hanya mencatat satu satuan (kg ATAU gram)
+// satu setoran catet satu satuan (milih KG/Gram)
 union Berat {
     double kg;
     int gram;
 };
 
-// STRUCT: data satu transaksi
 struct Transaksi {
     string namaNasabah;
     JenisSampah jenis;
@@ -49,7 +47,7 @@ void tampilHarga() {
 
 void tampilLaporan(Transaksi data[], int n) {
     double totalKg = 0, totalUang = 0;
-    cout << endl << "=========== LAPORAN SETORAN ===========" << endl;
+    cout << endl << "============== LAPORAN SETORAN ==============" << endl;
     cout << left << setw(4) << "No" << setw(15) << "Nasabah"
         << setw(10) << "Jenis" << setw(11) << "Berat(kg)"
         << "Total (Rp)" << endl;
@@ -82,7 +80,7 @@ double bacaAngka(const string &pesan) {
 int main() {
     Transaksi data[MAKS];
     int jumlah = 0;
-    char ulangi;
+    string ulangi;
 
     cout << "=== PROGRAM BANK SAMPAH ===" << endl;
 
@@ -111,14 +109,23 @@ int main() {
         t.jenis = (JenisSampah)pilih;
         t.harga = HARGA[pilih];
 
-        satuan = (int)bacaAngka("Input berat dalam (1. Kilogram, 2. Gram): ");
+        cout << endl << "====== Satuan Berat ======" << endl;
+        cout << "1. Kilogram" << endl;
+        cout << "2. Gram" << endl;
 
-        if (satuan == 2) {
-            b.gram = (int)bacaAngka("Berat (gram): ");
-            t.beratKg = b.gram / 1000.0;
-        } else {
+        do {
+            satuan = (int)bacaAngka("Pilih satuan berat (Input angka 1-2): ");
+            if (satuan < 1 || satuan > 2)
+                cout << "Input tidak valid! Masukkan angka 1 sampai 2." << endl;
+        } while (satuan < 1 || satuan > 2);
+
+        // Konversi sesuai satuan yang dipilih
+        if (satuan == 1) {
             b.kg = bacaAngka("Berat (kg): ");
             t.beratKg = b.kg;
+        } else {
+            b.gram = (int)bacaAngka("Berat (gram): ");
+            t.beratKg = b.gram / 1000.0;
         }
 
         if (t.beratKg <= 0) {
@@ -133,11 +140,11 @@ int main() {
         }
 
         cout << endl << "Jalankan program lagi? (ya/tidak): ";
-        cin >> ulang;
+        cin >> ulangi;
 
-    } while (ulangi == 'ya' || ulangi == 'Ya');
+    } while (ulangi == "ya" || ulangi == "Ya");
 
     tampilLaporan(data, jumlah);
-    cout << endl << "Terima kasih telah menabung sampah!" << endl;
+    cout << endl << "Terima kasih telah menabung di bank sampah!" << endl;
     return 0;
 }
